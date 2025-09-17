@@ -1,4 +1,4 @@
-package com.padel.social.padel_backend;
+package com.padel.social.padelbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
