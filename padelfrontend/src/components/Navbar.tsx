@@ -6,6 +6,7 @@ export default function Navbar() {
       <div className="font-bold text-xl">Padel App</div>
       <div className="space-x-4">
         <Link to="/">Home</Link>
+        <Link to="/partidos">Partidos</Link>
         <Link to="/canchas">Canchas</Link>
         <Link to="/torneos">Torneos</Link>
         <Link to="/ranking">Ranking</Link>

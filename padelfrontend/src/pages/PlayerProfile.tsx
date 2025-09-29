@@ -1,8 +1,19 @@
+import { useState } from "react";
 import Button from "../components/Button";
 
 type Partidos = {
   ganados?: number;
   perdidos?: number;
+};
+
+type Match = {
+  id: number;
+  fecha: string;
+  ubicacion: string;
+  categoria: string;
+  inscritos: number;
+  maxJugadores: number;
+  jugadores: string[]; // nombres de jugadores en este partido
 };
 
 type PlayerProfileProps = {
@@ -13,6 +24,9 @@ type PlayerProfileProps = {
   ciudad?: string;
   partidos?: Partidos;
   puntos?: number;
+  reputation?: number;
+  matches?: Match[];
+  currentUser?: string; // nombre del usuario que está viendo el perfil
 };
 
 export default function PlayerProfile({
@@ -23,8 +37,14 @@ export default function PlayerProfile({
   ciudad,
   partidos,
   puntos,
+  reputation = 0,
+  matches = [],
+  currentUser,
 }: PlayerProfileProps) {
-  // Si hay nombre, usamos la primera letra como "avatar"
+  const [rep, setRep] = useState<number>(reputation);
+  const [likesGiven, setLikesGiven] = useState<Record<number, boolean>>({});
+
+  // Avatar
   const avatar = nombre ? (
     <span className="text-xl font-bold text-white">
       {nombre.charAt(0).toUpperCase()}
@@ -32,6 +52,14 @@ export default function PlayerProfile({
   ) : (
     <span className="text-xl text-white">👤</span>
   );
+
+  // Función para dar like a un jugador en un partido
+  const handleLike = (matchId: number) => {
+    if (!likesGiven[matchId]) {
+      setRep(rep + 1);
+      setLikesGiven({ ...likesGiven, [matchId]: true });
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white shadow rounded p-6 flex flex-col items-center">
@@ -53,6 +81,45 @@ export default function PlayerProfile({
         Partidos perdidos: {partidos?.perdidos ?? "-"}
       </p>
       <p className="text-gray-600">Puntos: {puntos ?? "-"}</p>
+      <p className="text-gray-600">Reputación: {rep}</p>
+
+      {/* Calendario de próximos partidos */}
+      <h3 className="text-lg font-semibold mt-4 mb-2">Próximos Partidos</h3>
+      {matches.length > 0 ? (
+        <ul className="space-y-2 w-full">
+          {matches.map((m) => (
+            <li
+              key={m.id}
+              className="bg-gray-100 p-2 rounded flex justify-between items-center"
+            >
+              <div>
+                <span>
+                  {m.fecha} - {m.ubicacion} ({m.categoria})
+                </span>
+                <br />
+                <span>
+                  {m.inscritos}/{m.maxJugadores} jugadores
+                </span>
+              </div>
+
+              {/* Solo permitir like si currentUser estuvo en este partido y no es el mismo jugador */}
+              {currentUser &&
+                m.jugadores.includes(currentUser) &&
+                currentUser !== nombre && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleLike(m.id)}
+                    disabled={likesGiven[m.id]}
+                  >
+                    {likesGiven[m.id] ? "Liked ✅" : "Dar Like"}
+                  </Button>
+                )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">No hay partidos próximos.</p>
+      )}
 
       <div className="mt-4">
         <Button variant="primary">Editar Perfil</Button>
