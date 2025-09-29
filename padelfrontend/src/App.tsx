@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Canchas from "./pages/Canchas";
 import Perfil from "./pages/Perfil";
+import Ranking from "./pages/Ranking";
+import Torneos from "./pages/Torneos";
 
 export default function App() {
   return (
@@ -12,7 +14,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/perfil" element={<Perfil />} />
-        {/* Más rutas: /torneos, /ranking, /perfil */}
+        <Route path="/ranking" element={<Ranking />} />
+        <Route path="/torneos" element={<Torneos />} />
       </Routes>
     </div>
   );

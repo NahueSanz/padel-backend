@@ -1,18 +1,23 @@
+import Button from "../components/Button";
+
 type CardCanchaProps = {
   nombre: string;
   direccion: string;
-  nivel: string;
+  telefono: number;
 };
 
-export default function CardCancha({ nombre, direccion, nivel }: CardCanchaProps) {
+export default function CardCancha({
+  nombre,
+  direccion,
+  telefono,
+}: CardCanchaProps) {
   return (
     <div className="bg-white shadow rounded p-4">
       <h3 className="font-bold text-lg">{nombre}</h3>
       <p className="text-gray-600">{direccion}</p>
-      <p className="text-sm text-gray-500 mt-2">Nivel: {nivel}</p>
-      <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Ver detalles
-      </button>
+      <p className="text-sm text-gray-500 mt-2">Telefono: {telefono}</p>
+      <Button variant="primary">Ver detalles</Button>
+      <Button variant="primary">Reserva</Button>
     </div>
   );
 }

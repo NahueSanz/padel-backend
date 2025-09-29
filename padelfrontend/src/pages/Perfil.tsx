@@ -5,9 +5,11 @@ export default function Perfil() {
   const jugador = {
     nombre: "Nahuel Sanz",
     edad: 28,
-    nivel: "Intermedio",
+    nivel: "C8",
     ranking: 120,
     ciudad: "Buenos Aires",
+    partidos: { ganados: 120, perdidos: 100 },
+    puntos: 100,
   };
 
   return (

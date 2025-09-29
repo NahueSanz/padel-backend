@@ -1,11 +1,8 @@
 import CardCancha from "../components/CardCancha";
+import { canchasMock } from "../data/courts";
 
 export default function Canchas() {
-  const canchas = [
-    { nombre: "Club Palermo", direccion: "Av. Libertador 1234", nivel: "Intermedio" },
-    { nombre: "La Pista", direccion: "Calle Falsa 456", nivel: "Principiante" },
-    { nombre: "Padel Center", direccion: "Av. Corrientes 789", nivel: "Avanzado" },
-  ];
+  const canchas = [...canchasMock];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -13,8 +10,8 @@ export default function Canchas() {
         <CardCancha
           key={idx}
           nombre={c.nombre}
-          direccion={c.direccion}
-          nivel={c.nivel}
+          direccion={c.ubicacion}
+          telefono={c.telefono}
         />
       ))}
     </div>
