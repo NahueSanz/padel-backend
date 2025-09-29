@@ -1,18 +1,26 @@
 import { matchesMock } from "../data/matches";
 import type { Match } from "../data/matches";
+import { useState } from "react";
 import Button from "../components/Button";
+import CreateMatchForm from "./CreateMatchForm";
+import Modal from "../components/Modal";
 
 export default function Partidos() {
-  const handleCrearPartido = () => {
-    // Por ahora solo mostramos alerta, luego abrirá un modal/form
-    alert("Aquí se abrirá el formulario para crear un partido");
-  };
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <div className="max-w-4xl mx-auto mt-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Partidos Cercanos</h1>
-        <Button onClick={handleCrearPartido}>Crear Partido</Button>
+        <Button variant="primary" onClick={() => setShowForm(true)}>
+          Crear Partido
+        </Button>
+
+        {showForm && (
+          <Modal onClose={() => setShowForm(false)}>
+            <CreateMatchForm onClose={() => setShowForm(false)} />
+          </Modal>
+        )}
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
